@@ -29,7 +29,7 @@ $ chmod u+x set_permission.sh &&  ./set_permission.sh
 `docker-compose.yml`が存在するフォルダーで以下のコマンドを実行する。
 
 ```bash
-$ docker-compose up
+$ docker-compose up -d
 ```
 
 ## コンテナ停止する方法
@@ -86,7 +86,7 @@ http://127.0.0.1:8025
 開発中に以下のコマンドを実行する
 
 ```bash
-$ docker exec -ti laravel_php sh
+$ docker exec -ti laravel_php bash
 $ cd project && npm run watch
 ```
 
