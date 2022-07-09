@@ -102,3 +102,14 @@ Webpackは変更を感知すると、アセットを自動的に再コンパイ�
 ```bash
 $ npm rebuild
 ```
+
+### node.jsのアップデートが必要な場合
+
+以下のコマンドを実行する
+
+```bash
+$ sudo npm install -g n
+$ sudo n latest
+PHPコンテナに入りなおし、以下のコマンドでバージョンを確認。
+$ node -v
+```
