@@ -30,13 +30,13 @@ services:
             - "8025:8025"
 
     php:
-        image: trick-php:7.3.28-apache-composer-2.0.13
+        image: laravel-php:7.3.28-apache-composer-2.0.13
         container_name: laravel_php
         build:
             context: .
             dockerfile: ./infra/docker/Dockerfile
         volumes:
-            - ./backend:/home/trick/project
+            - ./backend:/home/laravel/project
         environment:
             XDEBUG_CONFIG: client_host=host.docker.internal
         ports:
