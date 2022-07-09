@@ -1,0 +1,4 @@
+xdebug.mode = debug
+xdebug.discover_client_host = 0
+xdebug.remote_handler = "dbgp"
+xdebug.client_port = 9000
