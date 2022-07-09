@@ -38,6 +38,9 @@ WORKDIR /home/laravel
 COPY ./infra/docker/boot.sh ./
 RUN chown -R laravel:laravel ./ && chmod +x boot.sh
 
+RUN npm install -g n
+RUN n latest
+
 USER laravel
 
 EXPOSE 80
