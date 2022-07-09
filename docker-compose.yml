@@ -1,0 +1,46 @@
+version: "3.9"
+services:
+    db:
+        container_name: laravel_db
+        image: mysql:5.7.33
+        volumes:
+            - ./infra/docker/mysql/volume:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: laravel
+            MYSQL_USER: laravel
+            MYSQL_PASSWORD: password
+            TZ: 'Asia/Tokyo'
+        ports:
+            - "3306:3306"
+
+    adminer:
+        image: adminer:4.8.0
+        container_name: laravel_adminer
+        ports:
+            - "8081:8080"
+        depends_on:
+            - db
+
+    mail:
+        image: mailhog/mailhog
+        container_name: laravel_mailhog
+        ports:
+            - "1025:1025"
+            - "8025:8025"
+
+    php:
+        image: trick-php:7.3.28-apache-composer-2.0.13
+        container_name: laravel_php
+        build:
+            context: .
+            dockerfile: ./infra/docker/Dockerfile
+        volumes:
+            - ./backend:/home/trick/project
+        environment:
+            XDEBUG_CONFIG: client_host=host.docker.internal
+        ports:
+            - "8080:80"
+        depends_on:
+            - db
+            - mail
