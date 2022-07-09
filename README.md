@@ -112,3 +112,6 @@ $ sudo npm install -g n
 $ sudo n latest
 $ node -v
 ```
+
+phpコンテナに入りなおして再度"npm run watch"
+コマンドを動かす。
