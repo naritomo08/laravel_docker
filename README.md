@@ -110,6 +110,5 @@ $ npm rebuild
 ```bash
 $ sudo npm install -g n
 $ sudo n latest
-PHPコンテナに入りなおし、以下のコマンドでバージョンを確認。
 $ node -v
 ```
