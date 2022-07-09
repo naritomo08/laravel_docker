@@ -18,13 +18,13 @@ RUN apt-get update \
 RUN docker-php-ext-install bcmath gd mysqli pdo pdo_mysql zip
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
-RUN adduser --disabled-password --gecos '' laravel \
-    && adduser laravel sudo \
-    && adduser laravel www-data \
+RUN adduser --disabled-password --gecos '' trick \
+    && adduser trick sudo \
+    && adduser trick www-data \
     && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-RUN sed -ri -e 's!/var/www/html!/home/laravel/project/public!g' /etc/apache2/sites-available/*.conf \
-    && sed -ri -e 's!/var/www/!/home/laravel/project/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+RUN sed -ri -e 's!/var/www/html!/home/trick/project/public!g' /etc/apache2/sites-available/*.conf \
+    && sed -ri -e 's!/var/www/!/home/trick/project/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 RUN a2enmod rewrite headers
 
@@ -33,12 +33,12 @@ RUN cat "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini-xdebug" > "$PHP
 
 COPY --from=composer:2.0.13 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /home/laravel
+WORKDIR /home/trick
 
 COPY ./infra/docker/boot.sh ./
-RUN chown -R laravel:laravel ./ && chmod +x boot.sh
+RUN chown -R trick:trick ./ && chmod +x boot.sh
 
-USER laravel
+USER trick
 
 EXPOSE 80
 ENTRYPOINT ["./boot.sh"]

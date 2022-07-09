@@ -8,6 +8,8 @@
 
 ```bash
 $ git clone git@github.com:naritomo08/laravel_docker.git laraveldocker
+$ cd laraveldocker
+$ git clone git@github.com:naritomo08/laravelapp.git backend
 ```
 
 2. 環境構築用のシェルスクリプトを実行する。
@@ -29,6 +31,15 @@ $ chmod u+x set_permission.sh &&  ./set_permission.sh
 ```bash
 $ docker-compose up
 ```
+
+## コンテナ停止する方法
+
+`docker-compose.yml`が存在するフォルダーで以下のコマンドを実行する。
+
+```bash
+$ docker-compose down
+```
+
 
 ## 起動中のコンテナに入る
 
