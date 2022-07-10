@@ -39,7 +39,7 @@ COPY ./infra/docker/boot.sh ./
 RUN chown -R laravel:laravel ./ && chmod +x boot.sh
 
 RUN sudo npm install -g n
-RUN sudo n latest
+RUN sudo n stable
 
 USER laravel
 
