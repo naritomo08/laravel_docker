@@ -9,6 +9,9 @@
 ```bash
 $ git clone git@github.com:naritomo08/laravel_docker.git laraveldocker
 $ cd laraveldocker
+laravel6の場合
+$ git clone git@github.com:naritomo08/laravelapp2.git backend
+laravel8の場合
 $ git clone git@github.com:naritomo08/laravelapp.git backend
 ```
 
