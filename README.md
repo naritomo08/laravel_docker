@@ -40,9 +40,16 @@ $ docker-compose up -d
 `docker-compose.yml`が存在するフォルダーで以下のコマンドを実行する。
 
 ```bash
-$ docker-compose down
+$ docker-compose stop
 ```
 
+## コンテナ削除する方法
+
+`docker-compose.yml`が存在するフォルダーで以下のコマンドを実行する。
+
+```bash
+$ docker-compose down
+```
 
 ## 起動中のコンテナに入る
 
@@ -107,4 +114,3 @@ $ npm rebuild
 又は
 $ chmod -R a+x node_modules
 ```
-
