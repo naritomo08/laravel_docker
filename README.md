@@ -8,15 +8,17 @@
 
 ```bash
 $ git clone git@github.com:naritomo08/laravel_docker.git laraveldocker
+$ cd laraveldocker
 $ git config --local user.name "naritomo"
 $ git config --local user.email naritomo08@gmail.com
-$ cd laraveldocker
 laravel6の場合
 $ git clone git@github.com:naritomo08/laravelapp2.git backend
+$ cd backend
 $ git config --local user.name "naritomo"
 $ git config --local user.email naritomo08@gmail.com
 laravel8の場合
 $ git clone git@github.com:naritomo08/laravelapp.git backend
+$ cd backend
 $ git config --local user.name "naritomo"
 $ git config --local user.email naritomo08@gmail.com
 ```
