@@ -76,15 +76,12 @@ $ docker exec -ti laravel_db bash
 
 ### laravel
 
-```bash
 http://127.0.0.1:8080
-```
 
 ### adminer(DB管理ツール)
 
-```bash
 http://127.0.0.1:8081
-```
+
 
 * ログイン情報
   - サーバ: db
@@ -94,9 +91,7 @@ http://127.0.0.1:8081
 
 ### mailhog(メールサーバ)
 
-```bash
 http://127.0.0.1:8025
-```
 
 ## その他
 
