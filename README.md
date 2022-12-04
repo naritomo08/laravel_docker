@@ -12,13 +12,13 @@ windows11+wsl2+Ubuntu22+DockerCompose+vscodeでの環境を構築してること
 ### 本レポジトリをクロンする。
 
 ```bash
-$ git clone git@github.com:naritomo08/laravel_docker.git laraveldocker
+$ git clone https://github.com/naritomo08/laravel_docker.git laraveldocker
 $ cd laraveldocker
 laravel6の場合
-$ git clone git@github.com:naritomo08/laravelapp2.git backend
+$ git clone https://github.com/naritomo08/laravelapp2.git backend
 $ cd backend
 laravel8の場合
-$ git clone git@github.com:naritomo08/laravelapp.git backend
+$ git clone https://github.com/naritomo08/laravelapp.git backend
 $ cd backend
 ```
 
