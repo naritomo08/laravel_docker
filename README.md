@@ -97,7 +97,7 @@ http://127.0.0.1:8025
 
 ```bash
 $ docker exec -ti laravel_php bash
-$ cd project && npm run watch
+$ npm run watch
 ```
 
 ### npm run watchコマンドとは
