@@ -110,7 +110,5 @@ Webpackは変更を感知すると、アセットを自動的に再コンパイ�
 以下のコマンドを実行する
 
 ```bash
-$ npm rebuild
-又は
 $ chmod -R a+x node_modules
 ```
