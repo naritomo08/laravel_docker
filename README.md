@@ -9,7 +9,7 @@ windows11+wsl2+Ubuntu22+DockerCompose+vscodeでの環境を構築してること
 
 ## 環境構築手順
 
-### 本レポジトリをクロンする。
+### 本リポジトリをクローンする。
 
 ```bash
 $ git clone https://github.com/naritomo08/laravel_docker.git laraveldocker
