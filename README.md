@@ -1,35 +1,34 @@
+## 参考URL
+
+[Elixirをdocker環境で立ち上げてみる。](https://qiita.com/naritomo08/items/fecf4ace7b9ca9078102)
+
+
 ## 事前準備
 
-自分の端末の公開鍵をgithubの個人設定に登録してあること。
+windows11+wsl2+Ubuntu22+DockerCompose+vscodeでの環境を構築してること。
 
 ## 環境構築手順
 
-1. 本レポジトリをクロンする。
+### 本レポジトリをクロンする。
 
 ```bash
 $ git clone git@github.com:naritomo08/laravel_docker.git laraveldocker
 $ cd laraveldocker
-$ git config --local user.name "naritomo"
-$ git config --local user.email naritomo08@gmail.com
 laravel6の場合
 $ git clone git@github.com:naritomo08/laravelapp2.git backend
 $ cd backend
-$ git config --local user.name "naritomo"
-$ git config --local user.email naritomo08@gmail.com
 laravel8の場合
 $ git clone git@github.com:naritomo08/laravelapp.git backend
 $ cd backend
-$ git config --local user.name "naritomo"
-$ git config --local user.email naritomo08@gmail.com
 ```
 
-2. 環境構築用のシェルスクリプトを実行する。
+### 環境構築用のシェルスクリプトを実行する。
 
 ```bash
 $ chmod u+x build_env.sh && ./build_env.sh
 ```
 
-3. ファイルパーミッションを更新する。
+### ファイルパーミッションを更新する。
 
 ```bash
 $ chmod u+x set_permission.sh &&  ./set_permission.sh
@@ -61,13 +60,13 @@ $ docker-compose down
 
 ## 起動中のコンテナに入る
 
-1. PHPコンテナ
+### PHPコンテナ
 
 ```bash
 $ docker exec -ti laravel_php bash
 ```
 
-2. DBコンテナ
+### DBコンテナ
 
 ```bash
 $ docker exec -ti laravel_db bash
@@ -75,15 +74,15 @@ $ docker exec -ti laravel_db bash
 
 ## サイトURL
 
-1. laravel
+### laravel
 
-```
+```bash
 http://127.0.0.1:8080
 ```
 
-2. adminer
+### adminer(DB管理ツール)
 
-```
+```bash
 http://127.0.0.1:8081
 ```
 
@@ -93,9 +92,9 @@ http://127.0.0.1:8081
   - パスワード: password
   - データベース: laravel
 
-3. mailhog
+### mailhog(メールサーバ)
 
-```
+```bash
 http://127.0.0.1:8025
 ```
 
