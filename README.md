@@ -16,10 +16,8 @@ $ git clone https://github.com/naritomo08/laravel_docker.git laraveldocker
 $ cd laraveldocker
 laravel6の場合
 $ git clone https://github.com/naritomo08/laravelapp2.git backend
-$ cd backend
 laravel8の場合
 $ git clone https://github.com/naritomo08/laravelapp.git backend
-$ cd backend
 ```
 
 ### 環境構築用のシェルスクリプトを実行する。
