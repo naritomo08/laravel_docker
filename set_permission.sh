@@ -1,6 +1,6 @@
 #!/bin/sh
 
-docker-compose exec -T php sh <<EOF
+docker-compose exec -T laravel_php sh <<EOF
 cd project
 
 sudo find . -type f -exec chmod 664 {} \;
