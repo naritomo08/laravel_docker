@@ -96,11 +96,17 @@ $ docker-compose exec laravel_db /bin/bash
 
 ## その他
 
-### 開発中に以下のコマンドを実行する
+### 開発中に以下のコマンドを実行してください。
 
 ```bash
 $ docker-compose exec laravel_php /bin/bash
 $ cd project
+
+*初回時以下の2つのコマンドを実施
+ (laravel8環境のみ上1つでよい。)
+$ chmod -R a+x node_modules
+$ sudo n 16.13.2
+
 $ npm run watch
 ```
 
@@ -108,11 +114,3 @@ $ npm run watch
 
 npm run watchコマンドはターミナルで実行し続け、関連ファイル全部の変更を監視します。
 Webpackは変更を感知すると、アセットを自動的に再コンパイルします。
-
-### cross-env: Permission deniedが発生した場合
-
-以下のコマンドを実行する
-
-```bash
-$ chmod -R a+x node_modules
-```
