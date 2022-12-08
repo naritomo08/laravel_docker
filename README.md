@@ -13,7 +13,7 @@ windows11+wsl2+Ubuntu22+DockerCompose+vscodeでの環境を構築してること
 
 ```bash
 $ git clone https://github.com/naritomo08/laravel_docker.git laraveldocker
-$ cd laraveldocker
+$ cd laraveldocker名wmdrl
 laravel6の場合
 $ git clone https://github.com/naritomo08/laravelapp2.git backend
 laravel8の場合
@@ -31,6 +31,30 @@ $ chmod u+x build_env.sh && ./build_env.sh
 ```bash
 $ chmod u+x set_permission.sh &&  ./set_permission.sh
 ```
+
+### 各種サイト確認する。
+
+## サイトURL
+
+### laravel
+
+http://127.0.0.1:8080
+
+### adminer(DB管理ツール)
+
+http://127.0.0.1:8081
+
+
+* ログイン情報
+  - サーバ: db
+  - ユーザ名: laravel
+  - パスワード: password
+  - データベース: laravel
+
+### mailhog(メールサーバ)
+
+http://127.0.0.1:8025
+
 
 ## コンテナ起動する方法
 
@@ -61,42 +85,22 @@ $ docker-compose down
 ### PHPコンテナ
 
 ```bash
-$ docker exec -ti laravel_php bash
+$ docker-compose exec laravel_php /bin/bash
 ```
 
 ### DBコンテナ
 
 ```bash
-$ docker exec -ti laravel_db bash
+$ docker-compose exec laravel_db /bin/bash
 ```
-
-## サイトURL
-
-### laravel
-
-http://127.0.0.1:8080
-
-### adminer(DB管理ツール)
-
-http://127.0.0.1:8081
-
-
-* ログイン情報
-  - サーバ: db
-  - ユーザ名: laravel
-  - パスワード: password
-  - データベース: laravel
-
-### mailhog(メールサーバ)
-
-http://127.0.0.1:8025
 
 ## その他
 
 ### 開発中に以下のコマンドを実行する
 
 ```bash
-$ docker exec -ti laravel_php bash
+$ docker-compose exec laravel_php /bin/bash
+$ cd project
 $ npm run watch
 ```
 
