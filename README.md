@@ -20,6 +20,13 @@ laravel8の場合
 $ git clone https://github.com/naritomo08/laravelapp.git backend
 ```
 
+後にファイル編集などをして、git通知が煩わしいときは
+作成したフォルダで以下のコマンドを入れる。
+
+```bash
+ rm -rf .git
+```
+
 ### 環境構築用のシェルスクリプトを実行する。
 
 ```bash
