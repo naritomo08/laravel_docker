@@ -13,7 +13,8 @@ windows11+wsl2+Ubuntu22+DockerCompose+vscodeでの環境を構築してること
 
 ```bash
 $ git clone https://github.com/naritomo08/laravel_docker.git laraveldocker
-$ cd laraveldocker名wmdrl
+$ cd laraveldocker
+→フォルダ名は好きに変更してよい。
 laravel6の場合
 $ git clone https://github.com/naritomo08/laravelapp2.git backend
 laravel8の場合
