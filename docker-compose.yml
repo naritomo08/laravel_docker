@@ -34,9 +34,9 @@ services:
         volumes:
             - ./backend:/home/laravel/project
         environment:
-            - SESSION_DRIVER=${SESSION_DRIVER:-redis}
-            - SESSION_LIFETIME=${SESSION_LIFETIME:-120}
-        XDEBUG_CONFIG: client_host=host.docker.internal
+            XDEBUG_CONFIG: client_host=host.docker.internal
+            SESSION_DRIVER: ${SESSION_DRIVER:-redis}
+            SESSION_LIFETIME: ${SESSION_LIFETIME:-120}
         ports:
             - "8080:80"
         depends_on:
