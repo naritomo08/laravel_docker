@@ -16,7 +16,8 @@ RUN apt-get update \
     && locale-gen
 
 RUN docker-php-ext-install bcmath gd mysqli pdo pdo_mysql zip
-RUN pecl install xdebug && docker-php-ext-enable xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug && pecl install redis-5.3.4 && \
+    docker-php-ext-enable redis
 
 RUN adduser --disabled-password --gecos '' laravel \
     && adduser laravel sudo \

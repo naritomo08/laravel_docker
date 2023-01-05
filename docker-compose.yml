@@ -40,3 +40,9 @@ services:
         depends_on:
             - laravel_db
             - laravel_mailhog
+        environment:
+            - SESSION_DRIVER=${SESSION_DRIVER:-redis}
+            - SESSION_LIFETIME=${SESSION_LIFETIME:-120}
+
+    laravel_cache:
+        image: redis:6.2.4-alpine
