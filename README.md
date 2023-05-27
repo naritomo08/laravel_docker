@@ -13,6 +13,8 @@ windows11+wsl2+Ubuntu22+DockerCompose+vscodeでの環境を構築してること
 
 ```bash
 $ git clone https://github.com/naritomo08/laravel_docker.git laraveldocker
+laravel10の場合
+$ git clone -b php8.2 https://github.com/naritomo08/laravel_docker.git laraveldocker
 $ cd laraveldocker
 →フォルダ名は好きに変更してよい。
 laravel6の場合
@@ -21,6 +23,8 @@ laravel8の場合
 $ git clone https://github.com/naritomo08/laravelapp.git backend
 laravel9の場合
 $ git clone https://github.com/naritomo08/laravelapp3.git backend
+laravel10の場合
+$ git clone https://github.com/naritomo08/laravelapp4.git backend
 ```
 
 後にファイル編集などをして、git通知が煩わしいときは
