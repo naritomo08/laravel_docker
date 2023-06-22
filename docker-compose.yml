@@ -1,4 +1,8 @@
 version: "3.9"
+
+volumes:
+  cache_volume:
+
 services:
     laravel_db:
         platform: linux/x86_64
@@ -22,6 +26,7 @@ services:
             - laravel_db
 
     laravel_mailhog:
+        platform: linux/x86_64
         image: mailhog/mailhog
         ports:
             - "1025:1025"
@@ -46,3 +51,5 @@ services:
 
     laravel_cache:
         image: redis:6.2.4-alpine
+        volumes:
+            - cache_volume:/data
