@@ -50,6 +50,6 @@ services:
             - laravel_mailhog
 
     laravel_cache:
-        image: redis:6.2.4-alpine
+        image: redis:latest
         volumes:
             - cache_volume:/data
