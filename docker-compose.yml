@@ -17,6 +17,7 @@ services:
             TZ: 'Asia/Tokyo'
         ports:
             - "3306:3306"
+        restart: always
 
     laravel_adminer:
         image: adminer:4.8.0
@@ -48,8 +49,10 @@ services:
         depends_on:
             - laravel_db
             - laravel_mailhog
+        restart: always
 
     laravel_cache:
         image: redis:latest
         volumes:
             - cache_volume:/data
+        restart: always
