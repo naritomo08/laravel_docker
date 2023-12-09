@@ -1,2 +1,2 @@
 backend/
-infra/
+infra/docker/mysql/volume
