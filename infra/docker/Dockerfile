@@ -1,4 +1,4 @@
-FROM php:8.0.26-apache
+FROM php:8.2-apache
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
@@ -27,6 +27,8 @@ RUN adduser --disabled-password --gecos '' laravel \
 RUN sed -ri -e 's!/var/www/html!/home/laravel/project/public!g' /etc/apache2/sites-available/*.conf \
     && sed -ri -e 's!/var/www/!/home/laravel/project/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
+COPY ./infra/docker/000-default.conf /etc/apache2/sites-available/000-default.conf
+
 RUN a2enmod rewrite headers
 
 COPY ./infra/docker/php/php.ini-xdebug "$PHP_INI_DIR/php.ini-xdebug"
@@ -34,7 +36,7 @@ RUN cat "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini-xdebug" > "$PHP
 
 COPY --from=composer:2.0.13 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /home/laravel
+WORKDIR /var/www
 
 COPY ./infra/docker/boot.sh ./
 RUN chown -R laravel:laravel ./ && chmod +x boot.sh

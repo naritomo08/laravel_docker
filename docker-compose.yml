@@ -40,7 +40,7 @@ services:
             context: .
             dockerfile: ./infra/docker/Dockerfile
         volumes:
-            - ./backend:/home/laravel/project
+            - ./backend:/var/www/project
         environment:
             XDEBUG_CONFIG: client_host=host.docker.internal
             SESSION_DRIVER: ${SESSION_DRIVER:-redis}
