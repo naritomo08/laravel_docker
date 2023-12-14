@@ -26,6 +26,7 @@ services:
             - "8081:8080"
         depends_on:
             - laravel_db
+        restart: always
 
     laravel_mailhog:
         platform: linux/x86_64
@@ -33,6 +34,7 @@ services:
         ports:
             - "1025:1025"
             - "8025:8025"
+        restart: always
 
     laravel_php:
         image: laravel-php:7.3.28-apache-composer-2.0.13
