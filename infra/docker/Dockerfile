@@ -34,7 +34,7 @@ RUN a2enmod rewrite headers
 COPY ./infra/docker/php/php.ini-xdebug "$PHP_INI_DIR/php.ini-xdebug"
 RUN cat "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini-xdebug" > "$PHP_INI_DIR/php.ini"
 
-COPY --from=composer:2.0.13 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
