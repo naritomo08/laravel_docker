@@ -1,3 +1,4 @@
 backend/
 infra/docker/mysql/volume
-.DS_store
+
+.DS_Store
