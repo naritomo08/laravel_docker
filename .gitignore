@@ -2,3 +2,4 @@ backend/
 infra/docker/mysql/volume
 
 .DS_Store
+.env
