@@ -6,7 +6,7 @@ volumes:
 services:
     laravel_db:
         platform: linux/x86_64
-        image: mysql:5.7.33
+        image: mysql/mysql-server:8.0
         volumes:
             - ./infra/docker/mysql/volume:/var/lib/mysql
             - ./infra/docker/mysql/my.cnf:/etc/my.cnf
