@@ -1,59 +1,124 @@
 volumes:
+  php-fpm-socket:
+  db-store:
   cache_volume:
 
 services:
-    laravel_db:
-        platform: linux/x86_64
-        image: mysql/mysql-server:8.0
-        volumes:
-            - ./infra/docker/mysql/volume:/var/lib/mysql
-            - ./infra/docker/mysql/my.cnf:/etc/my.cnf
-        environment:
-            MYSQL_ROOT_PASSWORD: password
-            MYSQL_DATABASE: laravel
-            MYSQL_USER: laravel
-            MYSQL_PASSWORD: password
-            TZ: 'Asia/Tokyo'
-        ports:
-            - "3306:3306"
-        restart: always
+  app:
+    build:
+      context: .
+      dockerfile: ./infra/docker/php/Dockerfile
+    env_file:
+      - ./backend/.env
+    volumes:
+      - php-fpm-socket:/var/run/php-fpm
+    #volumes:
+      #- ./backend:/work/backend
+    environment:
+      - APP_ENV=${APP_ENV:-local}
+      - DB_CONNECTION=mysql
+      - DB_HOST=${DB_HOST:-db}
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_NAME:-laravel_local}
+      - DB_USERNAME=${DB_USER:-phper}
+      - DB_PASSWORD=${DB_PASS:-secret}
+      - SESSION_DRIVER=${SESSION_DRIVER:-redis}
+      - SESSION_LIFETIME=${SESSION_LIFETIME:-120}
+      - MAIL_MAILER=${MAIL_MAILER:-smtp}
+      - REDIS_HOST=cache
+      - REDIS_PASSWORD=null
+      - REDIS_PORT=6379
 
-    laravel_adminer:
-        image: adminer:4.8.0
-        ports:
-            - "8081:8080"
-        depends_on:
-            - laravel_db
-        restart: always
+  web:
+    build:
+      context: .
+      dockerfile: ./infra/docker/nginx/Dockerfile
+    volumes:
+      - php-fpm-socket:/var/run/php-fpm
+    ports:
+      - target: 80
+        published: ${WEB_PORT:-8080}
+        protocol: tcp
+        mode: host
+    #volumes:
+      #- ./backend:/work/backend
 
-    laravel_mailhog:
-        platform: linux/x86_64
-        image: mailhog/mailhog
-        ports:
-            - "1025:1025"
-            - "8025:8025"
-        restart: always
+  db:
+    build:
+      context: .
+      dockerfile: ./infra/docker/mysql/Dockerfile
+    env_file:
+      - ./backend/.env
+    ports:
+      - target: 3306
+        published: ${DB_PORT:-3307}
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: volume
+        source: db-store
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
+    environment:
+      - MYSQL_DATABASE=${DB_NAME:-laravel_local}
+      - MYSQL_USER=${DB_USER:-phper}
+      - MYSQL_PASSWORD=${DB_PASS:-secret}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS:-secret}
 
-    laravel_php:
-        image: laravel-php:7.3.28-apache-composer-2.0.13
-        build:
-            context: .
-            dockerfile: ./infra/docker/Dockerfile
-        volumes:
-            - ./backend:/var/www/project
-        environment:
-            XDEBUG_CONFIG: client_host=host.docker.internal
-            SESSION_DRIVER: ${SESSION_DRIVER:-redis}
-            SESSION_LIFETIME: ${SESSION_LIFETIME:-120}
-        ports:
-            - "8080:80"
-        depends_on:
-            - laravel_db
-            - laravel_mailhog
-        restart: always
+  db.test:
+    build:
+      context: .
+      dockerfile: ./infra/docker/mysql/Dockerfile
+    env_file:
+      - ./backend/.env
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASS:-secret}'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: '${DB_NAME:-laravel_test}'
+      MYSQL_USER: '${DB_USER:-phper}'
+      MYSQL_PASSWORD: '${DB_PASS:-secret}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASS:-secret}"]
+      retries: 3
+      start_period: 5s
 
-    laravel_cache:
-        image: redis:latest
-        volumes:
-            - cache_volume:/data
-        restart: always
+  selenium:
+    image: seleniarm/standalone-chromium
+    #image: selenium/standalone-chrome:latest
+    ports:
+      - "4444:4444"
+    shm_size: '2gb'
+
+  cache:
+    image: redis:latest
+    volumes:
+      - type: volume
+        source: cache_volume
+        target: /data
+        volume:
+          nocopy: true
+    
+  laravel_adminer:
+    image: adminer:4.8.0
+    ports:
+        - "8081:8080"
+    depends_on:
+        - db
+        - db.test
+    restart: always
+
+  laravel_mailhog:
+    platform: linux/x86_64
+    image: mailhog/mailhog
+    ports:
+        - "1025:1025"
+        - "8025:8025"
+    restart: always
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: ${VPC_CIDR:-171.32.0.0/16}
