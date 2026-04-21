@@ -2,6 +2,7 @@ volumes:
   php-fpm-socket:
   db-store:
   cache_volume:
+  public-storage:
 
 services:
   app:
@@ -12,6 +13,7 @@ services:
       - ./backend/.env
     volumes:
       - php-fpm-socket:/var/run/php-fpm
+      - public-storage:/work/backend/storage/app/public
     #volumes:
       #- ./backend:/work/backend
     environment:
@@ -35,13 +37,14 @@ services:
       dockerfile: ./infra/docker/nginx/Dockerfile
     volumes:
       - php-fpm-socket:/var/run/php-fpm
+      - public-storage:/var/www/project/storage/app/public
+    #volumes:
+      #- ./backend:/work/backend
     ports:
       - target: 80
         published: ${WEB_PORT:-8080}
         protocol: tcp
         mode: host
-    #volumes:
-      #- ./backend:/work/backend
 
   db:
     build:
