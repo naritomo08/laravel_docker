@@ -43,9 +43,9 @@ http://127.0.0.1:8081
 
 * ログイン情報
   - サーバ: db
-  - ユーザ名: laravel
-  - パスワード: password
-  - データベース: laravel
+  - ユーザ名: phper
+  - パスワード: secret
+  - データベース: laravel_local
 
 ### mailhog(メールサーバ)
 
