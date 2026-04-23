@@ -65,7 +65,7 @@ services:
       dockerfile: ./infra/docker/php/Dockerfile
     env_file:
       - ./backend/.env
-    command: php artisan queue:work --tries=3 --sleep=3
+    command: php artisan queue:work database --tries=6 --delay=60
     working_dir: /work/backend
     restart: unless-stopped
     depends_on:
