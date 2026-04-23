@@ -31,6 +31,62 @@ services:
       - REDIS_PASSWORD=null
       - REDIS_PORT=6379
 
+  scheduler:
+    build:
+      context: .
+      dockerfile: ./infra/docker/php/Dockerfile
+    env_file:
+      - ./backend/.env
+    command: php artisan schedule:work
+    working_dir: /work/backend
+    restart: unless-stopped
+    depends_on:
+      - app
+      - db
+      - cache
+    environment:
+      - APP_ENV=${APP_ENV:-local}
+      - DB_CONNECTION=mysql
+      - DB_HOST=${DB_HOST:-db}
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_NAME:-laravel_local}
+      - DB_USERNAME=${DB_USER:-phper}
+      - DB_PASSWORD=${DB_PASS:-secret}
+      - SESSION_DRIVER=${SESSION_DRIVER:-redis}
+      - SESSION_LIFETIME=${SESSION_LIFETIME:-120}
+      - MAIL_MAILER=${MAIL_MAILER:-smtp}
+      - REDIS_HOST=cache
+      - REDIS_PASSWORD=null
+      - REDIS_PORT=6379
+
+  queue:
+    build:
+      context: .
+      dockerfile: ./infra/docker/php/Dockerfile
+    env_file:
+      - ./backend/.env
+    command: php artisan queue:work --tries=3 --sleep=3
+    working_dir: /work/backend
+    restart: unless-stopped
+    depends_on:
+      - app
+      - db
+      - cache
+    environment:
+      - APP_ENV=${APP_ENV:-local}
+      - DB_CONNECTION=mysql
+      - DB_HOST=${DB_HOST:-db}
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_NAME:-laravel_local}
+      - DB_USERNAME=${DB_USER:-phper}
+      - DB_PASSWORD=${DB_PASS:-secret}
+      - SESSION_DRIVER=${SESSION_DRIVER:-redis}
+      - SESSION_LIFETIME=${SESSION_LIFETIME:-120}
+      - MAIL_MAILER=${MAIL_MAILER:-smtp}
+      - REDIS_HOST=cache
+      - REDIS_PASSWORD=null
+      - REDIS_PORT=6379
+
   web:
     build:
       context: .
