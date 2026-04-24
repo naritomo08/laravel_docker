@@ -29,7 +29,7 @@ rm -rf .git
 chmod u+x build_env.sh && ./build_env.sh
 ```
 
-### 各種サイト確認する。
+### 各種サイト確認する
 
 ## サイトURL
 
