@@ -17,7 +17,7 @@ COPY --chown=www-data:www-data ./backend /work/backend
 
 WORKDIR /work/backend
 
-# Laravel の依存関係をインストール
-RUN npm install && \
-    npm ci && \
-    npm run prod
+# フロントエンド依存関係を lockfile ベースで再現し、ビルド後にキャッシュを片付ける
+RUN npm ci --no-audit --no-fund && \
+    npm run prod && \
+    npm cache clean --force
