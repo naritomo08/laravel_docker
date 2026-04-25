@@ -1,6 +1,7 @@
 volumes:
   php-fpm-socket:
   postgres-store:
+  postgres-test-store:
   cache_volume:
   public-storage:
 
@@ -131,6 +132,12 @@ services:
       POSTGRES_DB: '${DB_DATABASE_TEST:-laravel_test}'
       POSTGRES_USER: '${DB_USERNAME:-phper}'
       POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+    volumes:
+      - type: volume
+        source: postgres-test-store
+        target: /var/lib/postgresql/data
+        volume:
+          nocopy: true
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
