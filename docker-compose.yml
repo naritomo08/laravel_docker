@@ -125,6 +125,10 @@ services:
       - MYSQL_USER=${DB_USER:-phper}
       - MYSQL_PASSWORD=${DB_PASS:-secret}
       - MYSQL_ROOT_PASSWORD=${DB_PASS:-secret}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASS:-secret}"]
+      retries: 3
+      start_period: 5s
 
   db.test:
     build:
