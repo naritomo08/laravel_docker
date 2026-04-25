@@ -1,6 +1,6 @@
 volumes:
   php-fpm-socket:
-  db-store:
+  postgres-store:
   cache_volume:
   public-storage:
 
@@ -18,12 +18,12 @@ services:
       #- ./backend:/work/backend
     environment:
       - APP_ENV=${APP_ENV:-local}
-      - DB_CONNECTION=mysql
+      - DB_CONNECTION=pgsql
       - DB_HOST=${DB_HOST:-db}
-      - DB_PORT=3306
-      - DB_DATABASE=${DB_NAME:-laravel_local}
-      - DB_USERNAME=${DB_USER:-phper}
-      - DB_PASSWORD=${DB_PASS:-secret}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_DATABASE=${DB_DATABASE:-laravel_local}
+      - DB_USERNAME=${DB_USERNAME:-phper}
+      - DB_PASSWORD=${DB_PASSWORD:-secret}
       - SESSION_DRIVER=${SESSION_DRIVER:-redis}
       - SESSION_LIFETIME=${SESSION_LIFETIME:-120}
       - MAIL_MAILER=${MAIL_MAILER:-smtp}
@@ -46,12 +46,12 @@ services:
       - cache
     environment:
       - APP_ENV=${APP_ENV:-local}
-      - DB_CONNECTION=mysql
+      - DB_CONNECTION=pgsql
       - DB_HOST=${DB_HOST:-db}
-      - DB_PORT=3306
-      - DB_DATABASE=${DB_NAME:-laravel_local}
-      - DB_USERNAME=${DB_USER:-phper}
-      - DB_PASSWORD=${DB_PASS:-secret}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_DATABASE=${DB_DATABASE:-laravel_local}
+      - DB_USERNAME=${DB_USERNAME:-phper}
+      - DB_PASSWORD=${DB_PASSWORD:-secret}
       - SESSION_DRIVER=${SESSION_DRIVER:-redis}
       - SESSION_LIFETIME=${SESSION_LIFETIME:-120}
       - MAIL_MAILER=${MAIL_MAILER:-smtp}
@@ -74,12 +74,12 @@ services:
       - cache
     environment:
       - APP_ENV=${APP_ENV:-local}
-      - DB_CONNECTION=mysql
+      - DB_CONNECTION=pgsql
       - DB_HOST=${DB_HOST:-db}
-      - DB_PORT=3306
-      - DB_DATABASE=${DB_NAME:-laravel_local}
-      - DB_USERNAME=${DB_USER:-phper}
-      - DB_PASSWORD=${DB_PASS:-secret}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_DATABASE=${DB_DATABASE:-laravel_local}
+      - DB_USERNAME=${DB_USERNAME:-phper}
+      - DB_PASSWORD=${DB_PASSWORD:-secret}
       - SESSION_DRIVER=${SESSION_DRIVER:-redis}
       - SESSION_LIFETIME=${SESSION_LIFETIME:-120}
       - MAIL_MAILER=${MAIL_MAILER:-smtp}
@@ -103,45 +103,39 @@ services:
         mode: host
 
   db:
-    build:
-      context: .
-      dockerfile: ./infra/docker/mysql/Dockerfile
-    env_file:
-      - ./backend/.env
+    image: postgres:16
     ports:
-      - target: 3306
-        published: ${DB_PORT:-3307}
+      - target: 5432
+        published: ${DB_PUBLISHED_PORT:-5433}
         protocol: tcp
         mode: host
     volumes:
       - type: volume
-        source: db-store
-        target: /var/lib/mysql
+        source: postgres-store
+        target: /var/lib/postgresql/data
         volume:
           nocopy: true
     environment:
-      - MYSQL_DATABASE=${DB_NAME:-laravel_local}
-      - MYSQL_USER=${DB_USER:-phper}
-      - MYSQL_PASSWORD=${DB_PASS:-secret}
-      - MYSQL_ROOT_PASSWORD=${DB_PASS:-secret}
+      - POSTGRES_DB=${DB_DATABASE:-laravel_local}
+      - POSTGRES_USER=${DB_USERNAME:-phper}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-secret}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   db.test:
-    build:
-      context: .
-      dockerfile: ./infra/docker/mysql/Dockerfile
-    env_file:
-      - ./backend/.env
+    image: postgres:16
     environment:
-      MYSQL_ROOT_PASSWORD: '${DB_PASS:-secret}'
-      MYSQL_ROOT_HOST: "%"
-      MYSQL_DATABASE: '${DB_NAME:-laravel_test}'
-      MYSQL_USER: '${DB_USER:-phper}'
-      MYSQL_PASSWORD: '${DB_PASS:-secret}'
-      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      POSTGRES_DB: '${DB_DATABASE_TEST:-laravel_test}'
+      POSTGRES_USER: '${DB_USERNAME:-phper}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASS:-secret}"]
-      retries: 3
-      start_period: 5s
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   selenium:
     image: seleniarm/standalone-chromium

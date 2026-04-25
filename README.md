@@ -1,3 +1,5 @@
+# laravel_docker(postgres版)
+
 ## 参考URL
 
 [Elixirをdocker環境で立ち上げてみる。](https://qiita.com/naritomo08/items/fecf4ace7b9ca9078102)
@@ -11,9 +13,9 @@ windows11+wsl2+Ubuntu22+DockerCompose+vscodeでの環境を構築してること
 ### 本リポジトリをクローンする
 
 ```bash
-git clone -b tubuyaki https://github.com/naritomo08/laravel_docker.git laraveldocker
+git clone -b tubuyaki-postgres https://github.com/naritomo08/laravel_docker.git laraveldocker
 cd laraveldocker
-git clone https://github.com/naritomo08/laravel9tubu-public.git backend
+git clone -b postgres https://github.com/naritomo08/laravel9tubu-public.git backend
 ```
 
 後にファイル編集などをして、git通知が煩わしいときは
@@ -42,6 +44,7 @@ http://127.0.0.1:8080
 http://127.0.0.1:8081
 
 * ログイン情報
+  - DB種別: PostgreSQL
   - サーバ: db
   - ユーザ名: phper
   - パスワード: secret
