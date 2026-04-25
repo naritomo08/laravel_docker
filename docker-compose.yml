@@ -159,7 +159,7 @@ services:
         target: /data
         volume:
           nocopy: true
-    
+
   laravel_adminer:
     image: adminer:4.8.0
     ports:
