@@ -1,6 +1,7 @@
 volumes:
   php-fpm-socket:
   db-store:
+  db-test-store:
   cache_volume:
   public-storage:
 
@@ -131,6 +132,12 @@ services:
       dockerfile: ./infra/docker/mysql/Dockerfile
     env_file:
       - ./backend/.env
+    volumes:
+      - type: volume
+        source: db-test-store
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
     environment:
       MYSQL_ROOT_PASSWORD: '${DB_PASS:-secret}'
       MYSQL_ROOT_HOST: "%"
@@ -158,7 +165,7 @@ services:
         target: /data
         volume:
           nocopy: true
-    
+
   laravel_adminer:
     image: adminer:4.8.0
     ports:
