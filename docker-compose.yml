@@ -25,8 +25,6 @@ services:
       - DB_DATABASE=${DB_NAME:-laravel_local}
       - DB_USERNAME=${DB_USER:-phper}
       - DB_PASSWORD=${DB_PASS:-secret}
-      - SESSION_DRIVER=${SESSION_DRIVER:-redis}
-      - SESSION_LIFETIME=${SESSION_LIFETIME:-120}
       - MAIL_MAILER=${MAIL_MAILER:-smtp}
       - REDIS_HOST=cache
       - REDIS_PASSWORD=null
@@ -53,8 +51,6 @@ services:
       - DB_DATABASE=${DB_NAME:-laravel_local}
       - DB_USERNAME=${DB_USER:-phper}
       - DB_PASSWORD=${DB_PASS:-secret}
-      - SESSION_DRIVER=${SESSION_DRIVER:-redis}
-      - SESSION_LIFETIME=${SESSION_LIFETIME:-120}
       - MAIL_MAILER=${MAIL_MAILER:-smtp}
       - REDIS_HOST=cache
       - REDIS_PASSWORD=null
@@ -81,8 +77,6 @@ services:
       - DB_DATABASE=${DB_NAME:-laravel_local}
       - DB_USERNAME=${DB_USER:-phper}
       - DB_PASSWORD=${DB_PASS:-secret}
-      - SESSION_DRIVER=${SESSION_DRIVER:-redis}
-      - SESSION_LIFETIME=${SESSION_LIFETIME:-120}
       - MAIL_MAILER=${MAIL_MAILER:-smtp}
       - REDIS_HOST=cache
       - REDIS_PASSWORD=null
