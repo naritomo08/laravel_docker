@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-bullseye
+FROM php:8.3-fpm-bookworm
 LABEL maintainer="ucan-lab <yes@u-can.pro>"
 SHELL ["/bin/bash", "-oeux", "pipefail", "-c"]
 
@@ -12,7 +12,7 @@ ENV TZ=UTC \
   COMPOSER_ALLOW_SUPERUSER=1 \
   COMPOSER_HOME=/composer
 
-COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 RUN apt-get update && \
   savedAptMark="$(apt-mark showmanual)" && \
@@ -21,18 +21,18 @@ RUN apt-get update && \
   localedef -f UTF-8 -i en_US en_US.UTF-8 && \
   mkdir /var/run/php-fpm && \
   docker-php-ext-install intl pdo_mysql zip bcmath && \
-  pecl install redis-5.3.4 && \
+  pecl install redis && \
   docker-php-ext-enable redis && \
   runDeps="$( \
     find /usr/local -type f -executable -exec ldd '{}' ';' \
       | awk '/=>/ { print $(NF-1) }' \
       | sort -u \
-      | xargs -r dpkg-query --search \
+      | xargs -r dpkg-query --search 2>/dev/null \
       | cut -d: -f1 \
-      | sort -u \
+      | sort -u || true \
   )" && \
   apt-mark auto '.*' > /dev/null && \
-  apt-mark manual ${savedAptMark} git unzip locales ${runDeps} && \
+  apt-mark manual ${savedAptMark} git unzip locales libzip4 ${runDeps} && \
   apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/pear ~/.pearrc && \
