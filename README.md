@@ -13,7 +13,12 @@ windows11+wsl2+Ubuntu22+DockerCompose+vscodeでの環境を構築してること
 ```bash
 git clone -b laravel13 https://github.com/naritomo08/laravel_docker.git laraveldocker
 cd laraveldocker
+
+つぶやきサイトソース
 git clone -b laravel13 https://github.com/naritomo08/laravel9tubu-public.git backend
+
+Laravel13ソース
+git clone -b laravel13 https://github.com/naritomo08/laravelapp5.git backend
 ```
 
 後にファイル編集などをして、git通知が煩わしいときは

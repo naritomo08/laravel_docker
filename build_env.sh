@@ -1,6 +1,5 @@
 #!/bin/sh
 
-if [ ! -f backend/.env ]; then
-  cp backend/.env.example backend/.env
-fi
+cp backend/.env.example backend/.env
+
 docker-compose build && docker-compose up -d
