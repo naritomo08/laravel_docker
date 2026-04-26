@@ -1,15 +1,7 @@
 .git
 .gitignore
 
-backend/vendor
-backend/node_modules
-backend/storage/framework/cache/*
-backend/storage/framework/sessions/*
-backend/storage/framework/views/*
-backend/storage/logs/*
-backend/.phpunit.result.cache
-backend/npm-debug.log
-backend/yarn-error.log
+backend
 
 *.log
 .DS_Store
