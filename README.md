@@ -11,9 +11,9 @@ windows11+wsl2+Ubuntu22+DockerCompose+vscodeでの環境を構築してること
 ### 本リポジトリをクローンする
 
 ```bash
-git clone -b tubuyaki https://github.com/naritomo08/laravel_docker.git laraveldocker
+git clone -b laravel13 https://github.com/naritomo08/laravel_docker.git laraveldocker
 cd laraveldocker
-git clone https://github.com/naritomo08/laravel9tubu-public.git backend
+git clone -b laravel13 https://github.com/naritomo08/laravel9tubu-public.git backend
 ```
 
 後にファイル編集などをして、git通知が煩わしいときは
