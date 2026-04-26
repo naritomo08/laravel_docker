@@ -15,7 +15,6 @@ services:
     volumes:
       - php-fpm-socket:/var/run/php-fpm
       - public-storage:/work/backend/storage/app/public
-    #volumes:
       #- ./backend:/work/backend
     environment:
       - APP_ENV=${APP_ENV:-local}
@@ -43,6 +42,8 @@ services:
       - app
       - db
       - cache
+    #volumes:
+      #- ./backend:/work/backend
     environment:
       - APP_ENV=${APP_ENV:-local}
       - DB_CONNECTION=mysql
@@ -69,6 +70,8 @@ services:
       - app
       - db
       - cache
+    #volumes:
+      #- ./backend:/work/backend
     environment:
       - APP_ENV=${APP_ENV:-local}
       - DB_CONNECTION=mysql
@@ -89,7 +92,6 @@ services:
     volumes:
       - php-fpm-socket:/var/run/php-fpm
       - public-storage:/var/www/project/storage/app/public
-    #volumes:
       #- ./backend:/work/backend
     ports:
       - target: 80

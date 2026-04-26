@@ -1,4 +1,4 @@
-FROM nginx:1.20-alpine
+FROM nginx:stable-alpine
 LABEL maintainer="ucan-lab <yes@u-can.pro>"
 SHELL ["/bin/ash", "-oeux", "pipefail", "-c"]
 
@@ -17,7 +17,7 @@ COPY --chown=www-data:www-data ./backend /work/backend
 
 WORKDIR /work/backend
 
-# フロントエンド依存関係を lockfile ベースで再現し、ビルド後にキャッシュを片付ける
-RUN npm ci --no-audit --no-fund && \
-    npm run prod && \
+# フロントエンド依存関係をインストールし、ビルド後にキャッシュを片付ける
+RUN npm install --no-audit --no-fund && \
+    npm run build && \
     npm cache clean --force
