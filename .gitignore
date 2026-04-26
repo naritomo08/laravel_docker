@@ -1,7 +1,4 @@
-.git
-.gitignore
-
-backend
-
-*.log
+backend/
+infra/mysql/volume
 .DS_Store
+.env
