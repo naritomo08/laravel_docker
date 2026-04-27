@@ -10,6 +10,11 @@ services:
     build:
       context: .
       dockerfile: ./infra/docker/php/Dockerfile
+    command: >
+      sh -lc "mkdir -p /work/backend/storage/app/public/images
+      && chown -R www-data:www-data /work/backend/storage/app/public
+      && chmod -R u=rwX,g=rX,o=rX /work/backend/storage/app/public
+      && php-fpm"
     env_file:
       - ./backend/.env
     volumes:
@@ -91,7 +96,7 @@ services:
       dockerfile: ./infra/docker/nginx/Dockerfile
     volumes:
       - php-fpm-socket:/var/run/php-fpm
-      - public-storage:/var/www/project/storage/app/public
+      - public-storage:/work/backend/storage/app/public
       #- ./backend:/work/backend
     ports:
       - target: 80
