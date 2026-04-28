@@ -20,7 +20,6 @@ services:
     volumes:
       - php-fpm-socket:/var/run/php-fpm
       - public-storage:/work/backend/storage/app/public
-      #- ./backend:/work/backend
     environment:
       - APP_ENV=${APP_ENV:-local}
       - DB_CONNECTION=mysql
@@ -47,8 +46,6 @@ services:
       - app
       - db
       - cache
-    #volumes:
-      #- ./backend:/work/backend
     environment:
       - APP_ENV=${APP_ENV:-local}
       - DB_CONNECTION=mysql
@@ -75,8 +72,6 @@ services:
       - app
       - db
       - cache
-    #volumes:
-      #- ./backend:/work/backend
     environment:
       - APP_ENV=${APP_ENV:-local}
       - DB_CONNECTION=mysql
@@ -97,7 +92,6 @@ services:
     volumes:
       - php-fpm-socket:/var/run/php-fpm
       - public-storage:/work/backend/storage/app/public
-      #- ./backend:/work/backend
     ports:
       - target: 80
         published: ${WEB_PORT:-8080}
@@ -157,7 +151,6 @@ services:
 
   selenium:
     image: seleniarm/standalone-chromium
-    #image: selenium/standalone-chrome:latest
     ports:
       - "4444:4444"
     shm_size: '2gb'
