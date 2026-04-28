@@ -1,7 +1,7 @@
 volumes:
   php-fpm-socket:
-  db-store:
-  db-test-store:
+  pg-store:
+  pg-test-store:
   cache_volume:
   public-storage:
 
@@ -22,9 +22,9 @@ services:
       - public-storage:/work/backend/storage/app/public
     environment:
       - APP_ENV=${APP_ENV:-local}
-      - DB_CONNECTION=mysql
+      - DB_CONNECTION=pgsql
       - DB_HOST=${DB_HOST:-db}
-      - DB_PORT=3306
+      - DB_PORT=5432
       - DB_DATABASE=${DB_NAME:-laravel_local}
       - DB_USERNAME=${DB_USER:-phper}
       - DB_PASSWORD=${DB_PASS:-secret}
@@ -48,9 +48,9 @@ services:
       - cache
     environment:
       - APP_ENV=${APP_ENV:-local}
-      - DB_CONNECTION=mysql
+      - DB_CONNECTION=pgsql
       - DB_HOST=${DB_HOST:-db}
-      - DB_PORT=3306
+      - DB_PORT=5432
       - DB_DATABASE=${DB_NAME:-laravel_local}
       - DB_USERNAME=${DB_USER:-phper}
       - DB_PASSWORD=${DB_PASS:-secret}
@@ -74,9 +74,9 @@ services:
       - cache
     environment:
       - APP_ENV=${APP_ENV:-local}
-      - DB_CONNECTION=mysql
+      - DB_CONNECTION=pgsql
       - DB_HOST=${DB_HOST:-db}
-      - DB_PORT=3306
+      - DB_PORT=5432
       - DB_DATABASE=${DB_NAME:-laravel_local}
       - DB_USERNAME=${DB_USER:-phper}
       - DB_PASSWORD=${DB_PASS:-secret}
@@ -99,53 +99,45 @@ services:
         mode: host
 
   db:
-    build:
-      context: .
-      dockerfile: ./infra/docker/mysql/Dockerfile
+    image: postgres:16-bookworm
     env_file:
       - ./backend/.env
     ports:
-      - target: 3306
-        published: ${DB_PORT:-3307}
+      - target: 5432
+        published: ${DB_PUBLISHED_PORT:-5433}
         protocol: tcp
         mode: host
     volumes:
       - type: volume
-        source: db-store
-        target: /var/lib/mysql
+        source: pg-store
+        target: /var/lib/postgresql/data
         volume:
           nocopy: true
     environment:
-      - MYSQL_DATABASE=${DB_NAME:-laravel_local}
-      - MYSQL_USER=${DB_USER:-phper}
-      - MYSQL_PASSWORD=${DB_PASS:-secret}
-      - MYSQL_ROOT_PASSWORD=${DB_PASS:-secret}
+      - POSTGRES_DB=${DB_NAME:-laravel_local}
+      - POSTGRES_USER=${DB_USER:-phper}
+      - POSTGRES_PASSWORD=${DB_PASS:-secret}
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASS:-secret}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-phper} -d ${DB_NAME:-laravel_local}"]
       retries: 3
       start_period: 5s
 
   db.test:
-    build:
-      context: .
-      dockerfile: ./infra/docker/mysql/Dockerfile
+    image: postgres:16-bookworm
     env_file:
       - ./backend/.env
     volumes:
       - type: volume
-        source: db-test-store
-        target: /var/lib/mysql
+        source: pg-test-store
+        target: /var/lib/postgresql/data
         volume:
           nocopy: true
     environment:
-      MYSQL_ROOT_PASSWORD: '${DB_PASS:-secret}'
-      MYSQL_ROOT_HOST: "%"
-      MYSQL_DATABASE: '${DB_NAME:-laravel_test}'
-      MYSQL_USER: '${DB_USER:-phper}'
-      MYSQL_PASSWORD: '${DB_PASS:-secret}'
-      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      POSTGRES_DB: '${DB_TEST_NAME:-laravel_test}'
+      POSTGRES_USER: '${DB_USER:-phper}'
+      POSTGRES_PASSWORD: '${DB_PASS:-secret}'
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASS:-secret}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-phper} -d ${DB_TEST_NAME:-laravel_test}"]
       retries: 3
       start_period: 5s
 

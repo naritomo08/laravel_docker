@@ -26,11 +26,11 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 RUN apt-get update && \
   savedAptMark="$(apt-mark showmanual)" && \
-  apt-get -y install --no-install-recommends git libicu-dev libonig-dev libzip-dev unzip locales && \
+  apt-get -y install --no-install-recommends git libicu-dev libonig-dev libpq-dev libzip-dev unzip locales && \
   locale-gen en_US.UTF-8 && \
   localedef -f UTF-8 -i en_US en_US.UTF-8 && \
   mkdir /var/run/php-fpm && \
-  docker-php-ext-install intl pdo_mysql zip bcmath && \
+  docker-php-ext-install intl pdo_mysql pdo_pgsql zip bcmath && \
   pecl install redis && \
   docker-php-ext-enable redis && \
   runDeps="$( \
@@ -42,7 +42,7 @@ RUN apt-get update && \
       | sort -u || true \
   )" && \
   apt-mark auto '.*' > /dev/null && \
-  apt-mark manual ${savedAptMark} git unzip locales libzip4 ${runDeps} && \
+  apt-mark manual ${savedAptMark} git unzip locales libpq5 libzip4 ${runDeps} && \
   apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/pear ~/.pearrc && \

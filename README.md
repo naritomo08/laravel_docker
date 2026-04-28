@@ -11,11 +11,11 @@ windows11+wsl2+Ubuntu22+DockerCompose+vscodeでの環境を構築してること
 ### 本リポジトリをクローンする
 
 ```bash
-git clone -b laravel13 https://github.com/naritomo08/laravel_docker.git laraveldocker
+git clone -b laravel13-postgres https://github.com/naritomo08/laravel_docker.git laraveldocker
 cd laraveldocker
 
 つぶやきサイトソース
-git clone -b laravel13 https://github.com/naritomo08/laravel9tubu-public.git backend
+git clone -b laravel13-postgres https://github.com/naritomo08/laravel9tubu-public.git backend
 
 Laravel13ソース
 git clone -b laravel13 https://github.com/naritomo08/laravelapp5.git backend
@@ -47,6 +47,7 @@ http://127.0.0.1:8080
 http://127.0.0.1:8081
 
 * ログイン情報
+  - DB種別: PostgreSQL
   - サーバ: db
   - ユーザ名: phper
   - パスワード: secret
@@ -92,6 +93,12 @@ docker-compose exec app /bin/bash
 
 ```bash
 docker-compose exec db /bin/bash
+```
+
+PostgreSQLに接続する場合:
+
+```bash
+docker-compose exec db psql -U phper -d laravel_local
 ```
 
 Laravelサイトの立ち上げ方はlaravel9tubu-public
