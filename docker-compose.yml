@@ -10,6 +10,7 @@ services:
     build:
       context: .
       dockerfile: ./infra/docker/php/Dockerfile
+    restart: unless-stopped
     command: >
       sh -lc "mkdir -p /work/backend/storage/app/public/images
       && chown -R www-data:www-data /work/backend/storage/app/public
@@ -89,6 +90,7 @@ services:
     build:
       context: .
       dockerfile: ./infra/docker/nginx/Dockerfile
+    restart: unless-stopped
     volumes:
       - php-fpm-socket:/var/run/php-fpm
       - public-storage:/work/backend/storage/app/public
@@ -102,6 +104,7 @@ services:
     image: postgres:16-bookworm
     env_file:
       - ./backend/.env
+    restart: unless-stopped
     ports:
       - target: 5432
         published: ${DB_PUBLISHED_PORT:-5433}
@@ -126,6 +129,7 @@ services:
     image: postgres:16-bookworm
     env_file:
       - ./backend/.env
+    restart: unless-stopped
     volumes:
       - type: volume
         source: pg-test-store
@@ -146,6 +150,7 @@ services:
     ports:
       - "4444:4444"
     shm_size: '2gb'
+    restart: unless-stopped
 
   cache:
     image: redis:latest
@@ -155,6 +160,7 @@ services:
         target: /data
         volume:
           nocopy: true
+    restart: unless-stopped
 
   laravel_adminer:
     image: adminer:4.8.0
@@ -163,7 +169,7 @@ services:
     depends_on:
         - db
         - db.test
-    restart: always
+    restart: unless-stopped
 
   laravel_mailhog:
     platform: linux/x86_64
@@ -171,7 +177,7 @@ services:
     ports:
         - "1025:1025"
         - "8025:8025"
-    restart: always
+    restart: unless-stopped
 
 networks:
   default:
