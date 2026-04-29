@@ -10,6 +10,7 @@ services:
     build:
       context: .
       dockerfile: ./infra/docker/php/Dockerfile
+    restart: unless-stopped
     command: >
       sh -lc "mkdir -p /work/backend/storage/app/public/images
       && chown -R www-data:www-data /work/backend/storage/app/public
@@ -89,6 +90,7 @@ services:
     build:
       context: .
       dockerfile: ./infra/docker/nginx/Dockerfile
+    restart: unless-stopped
     volumes:
       - php-fpm-socket:/var/run/php-fpm
       - public-storage:/work/backend/storage/app/public
@@ -102,6 +104,7 @@ services:
     build:
       context: .
       dockerfile: ./infra/docker/mysql/Dockerfile
+    restart: unless-stopped
     env_file:
       - ./backend/.env
     ports:
@@ -129,6 +132,7 @@ services:
     build:
       context: .
       dockerfile: ./infra/docker/mysql/Dockerfile
+    restart: unless-stopped
     env_file:
       - ./backend/.env
     volumes:
@@ -151,12 +155,14 @@ services:
 
   selenium:
     image: seleniarm/standalone-chromium
+    restart: unless-stopped
     ports:
       - "4444:4444"
     shm_size: '2gb'
 
   cache:
     image: redis:latest
+    restart: unless-stopped
     volumes:
       - type: volume
         source: cache_volume
@@ -171,7 +177,7 @@ services:
     depends_on:
         - db
         - db.test
-    restart: always
+    restart: unless-stopped
 
   laravel_mailhog:
     platform: linux/x86_64
@@ -179,7 +185,7 @@ services:
     ports:
         - "1025:1025"
         - "8025:8025"
-    restart: always
+    restart: unless-stopped
 
 networks:
   default:
