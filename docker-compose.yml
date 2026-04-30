@@ -26,9 +26,9 @@ services:
       - DB_CONNECTION=pgsql
       - DB_HOST=${DB_HOST:-db}
       - DB_PORT=5432
-      - DB_DATABASE=${DB_NAME:-laravel_local}
-      - DB_USERNAME=${DB_USER:-phper}
-      - DB_PASSWORD=${DB_PASS:-secret}
+      - DB_DATABASE=${DB_DATABASE:-laravel_local}
+      - DB_USERNAME=${DB_USERNAME:-phper}
+      - DB_PASSWORD=${DB_PASSWORD:-secret}
       - MAIL_MAILER=${MAIL_MAILER:-smtp}
       - REDIS_HOST=cache
       - REDIS_PASSWORD=null
@@ -52,9 +52,9 @@ services:
       - DB_CONNECTION=pgsql
       - DB_HOST=${DB_HOST:-db}
       - DB_PORT=5432
-      - DB_DATABASE=${DB_NAME:-laravel_local}
-      - DB_USERNAME=${DB_USER:-phper}
-      - DB_PASSWORD=${DB_PASS:-secret}
+      - DB_DATABASE=${DB_DATABASE:-laravel_local}
+      - DB_USERNAME=${DB_USERNAME:-phper}
+      - DB_PASSWORD=${DB_PASSWORD:-secret}
       - MAIL_MAILER=${MAIL_MAILER:-smtp}
       - REDIS_HOST=cache
       - REDIS_PASSWORD=null
@@ -78,9 +78,9 @@ services:
       - DB_CONNECTION=pgsql
       - DB_HOST=${DB_HOST:-db}
       - DB_PORT=5432
-      - DB_DATABASE=${DB_NAME:-laravel_local}
-      - DB_USERNAME=${DB_USER:-phper}
-      - DB_PASSWORD=${DB_PASS:-secret}
+      - DB_DATABASE=${DB_DATABASE:-laravel_local}
+      - DB_USERNAME=${DB_USERNAME:-phper}
+      - DB_PASSWORD=${DB_PASSWORD:-secret}
       - MAIL_MAILER=${MAIL_MAILER:-smtp}
       - REDIS_HOST=cache
       - REDIS_PASSWORD=null
@@ -117,11 +117,11 @@ services:
         volume:
           nocopy: true
     environment:
-      - POSTGRES_DB=${DB_NAME:-laravel_local}
-      - POSTGRES_USER=${DB_USER:-phper}
-      - POSTGRES_PASSWORD=${DB_PASS:-secret}
+      - POSTGRES_DB=${DB_DATABASE:-laravel_local}
+      - POSTGRES_USER=${DB_USERNAME:-phper}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-secret}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-phper} -d ${DB_NAME:-laravel_local}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-phper} -d ${DB_DATABASE:-laravel_local}"]
       retries: 3
       start_period: 5s
 
@@ -137,11 +137,11 @@ services:
         volume:
           nocopy: true
     environment:
-      POSTGRES_DB: '${DB_TEST_NAME:-laravel_test}'
-      POSTGRES_USER: '${DB_USER:-phper}'
-      POSTGRES_PASSWORD: '${DB_PASS:-secret}'
+      POSTGRES_DB: '${DB_TEST_DATABASE:-laravel_test}'
+      POSTGRES_USER: '${DB_USERNAME:-phper}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-phper} -d ${DB_TEST_NAME:-laravel_test}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-phper} -d ${DB_TEST_DATABASE:-laravel_test}"]
       retries: 3
       start_period: 5s
 
