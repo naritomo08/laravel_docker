@@ -2,3 +2,4 @@ backend/
 infra/mysql/volume
 .DS_Store
 .env
+.codex
