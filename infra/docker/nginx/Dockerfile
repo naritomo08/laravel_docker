@@ -3,10 +3,10 @@ FROM node:22-bookworm-slim AS frontend-builder
 WORKDIR /work/backend
 
 COPY ./backend/package*.json ./
-RUN npm ci --no-audit --no-fund
+RUN npm install --no-audit --no-fund
 
 COPY ./backend ./
-RUN npm run prod
+RUN npm run build
 
 FROM nginx:stable-alpine
 LABEL maintainer="ucan-lab <yes@u-can.pro>"
