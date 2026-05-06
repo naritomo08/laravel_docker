@@ -55,7 +55,7 @@ services:
         restart: always
 
     laravel_cache:
-        image: redis:latest
+        image: redis:6.2.4-alpine
         volumes:
             - cache_volume:/data
         restart: always
