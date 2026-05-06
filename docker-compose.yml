@@ -156,7 +156,7 @@ services:
     shm_size: '2gb'
 
   cache:
-    image: redis:latest
+    image: redis:6.2.4-alpine
     volumes:
       - type: volume
         source: cache_volume
