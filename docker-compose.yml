@@ -48,6 +48,7 @@ services:
     build:
       context: .
       dockerfile: ./infra/docker/nginx/Dockerfile
+    container_name: tubustg-frontend
     restart: unless-stopped
     logging:
       driver: syslog
