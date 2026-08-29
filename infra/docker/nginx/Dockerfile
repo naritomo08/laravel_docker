@@ -12,7 +12,11 @@ FROM nginx:stable-alpine
 LABEL maintainer="ucan-lab <yes@u-can.pro>"
 SHELL ["/bin/ash", "-oeux", "pipefail", "-c"]
 
-ENV TZ=UTC
+ENV TZ=Asia/Tokyo
+
+RUN apk add --no-cache tzdata && \
+  ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && \
+  echo ${TZ} > /etc/timezone
 
 # nginx の設定ファイルをコピー
 COPY ./infra/docker/nginx/default.conf /etc/nginx/templates/default.conf.template
