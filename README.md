@@ -72,7 +72,7 @@ http://127.0.0.1:8025
 `docker-compose.yml`が存在するフォルダーで以下のコマンドを実行する。
 
 ```bash
-docker-compose up -d
+docker compose build && docker compose up -d
 ```
 
 ## コンテナ停止する方法
