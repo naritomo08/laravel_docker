@@ -50,11 +50,11 @@ services:
       dockerfile: ./infra/docker/nginx/Dockerfile
     container_name: tubustg-frontend
     restart: unless-stopped
-    logging:
-      driver: syslog
-      options:
-        syslog-address: "tcp://127.0.0.1:514"
-        tag: "{{.Name}}"
+    #logging:
+      #driver: syslog
+      #options:
+        #syslog-address: "tcp://127.0.0.1:514"
+        #tag: "{{.Name}}"
     volumes:
       - php-fpm-socket:/var/run/php-fpm
       - public-storage:/work/backend/storage/app/public
