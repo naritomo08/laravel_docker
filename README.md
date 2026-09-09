@@ -15,10 +15,7 @@ git clone -b laravel13 https://github.com/naritomo08/laravel_docker.git laraveld
 cd laraveldocker
 
 つぶやきサイトソース
-git clone -b laravel13 https://github.com/naritomo08/laravel9tubu-public.git backend
-
-Laravel13ソース
-git clone -b laravel13 https://github.com/naritomo08/laravelapp5.git backend
+git clone -b laravel13-local git@github.com:naritomo08/laravel9tubu.git backend
 ```
 
 後にファイル編集などをして、git通知が煩わしいときは
